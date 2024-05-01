@@ -21,21 +21,26 @@ SQLFlow is a kafka consumer that embeds SQL for stream transformation:
 ### Docker
 [Docker is the easiest way to get started.](https://hub.docker.com/r/turbolytics/sql-flow)
 
-- Pull the sql-flow docker image
+- replace 100.111.171.20/host.docker.internal with your own host's **tailscale** IP
+
+- build the sql-flow docker image
 ```
-docker pull turbolytics/sql-flow:latest
+docker build . -t sql-flow:latest
 ```
 
 - Validate config by invoking it on test data
 ```
-docker run -v $(PWD)/dev:/tmp/conf -v /tmp/sqlflow:/tmp/sqlflow turbolytics/sql-flow:latest dev invoke /tmp/conf/config/examples/basic.agg.yml /tmp/conf/fixtures/simple.json
+docker run -v $(pwd)/dev:/tmp/conf -v /tmp/sqlflow:/tmp/sqlflow sql-flow:latest dev invoke /tmp/conf/config/examples/basic.agg.yml /tmp/conf/fixtures/simple.json
+```
 
+- see output
+```
 ['{"city":"New York","city_count":28672}', '{"city":"Baltimore","city_count":28672}']
 ```
 
 - Start kafka locally using docker
 ```
-docker-compose -f dev/kafka-single.yml up -d
+docker compose -f dev/kafka-single.yml up -d
 ```
 
 - Publish test messages to kafka
@@ -51,7 +56,7 @@ docker exec -it kafka1 kafka-console-consumer --bootstrap-server=kafka1:9092 --t
 - Start SQLFlow in docker
 
 ```
-docker run -v $(PWD)/dev:/tmp/conf -v /tmp/sqlflow:/tmp/sqlflow turbolytics/sql-flow:latest run /tmp/conf/config/local.docker.yml
+docker run -v $(pwd)/dev:/tmp/conf -v /tmp/sqlflow:/tmp/sqlflow sql-flow:latest run /tmp/conf/config/local.docker.yml
 ```
 
 - Verify output in the kafka consumer

@@ -1,7 +1,7 @@
 
 
 kafka:
-  brokers: [host.docker.internal:29092]
+  brokers: [100.111.171.20:29092]
   group_id: test
   auto_offset_reset: earliest
 
