@@ -105,12 +105,14 @@ Coming Soon, until then checkout:
 pip install -r requirements.txt
 pip install -r requirements.dev.txt
 
-C_INCLUDE_PATH=/opt/homebrew/Cellar/librdkafka/2.3.0/include LIBRARY_PATH=/opt/homebrew/Cellar/librdkafka/2.3.0/lib pip install confluent-kafka
 ```
 
 - Run tests
 ```
-pytests tests
+$ sudo chmod 777 -R /tmp/sqlflow/resultscache
+$ export PYTHONPATH=.
+
+pytest tests
 ```
  
 
